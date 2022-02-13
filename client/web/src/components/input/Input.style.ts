@@ -6,14 +6,11 @@ const StyledInput = styled.input`
   border-color: ${({ theme }) => theme.colors.border};
   border-radius: ${({ theme }) => theme.borderRadius};
 
-  max-width: 430px;
-  height: 40px;
+  min-height: 40px;
   padding: 10px 20px;
-  margin: 0 10px;
   font-size: 16px;
   font-weight: 300;
-  flex-grow: 2;
-  flex-shrink: 2;
+
   border-style: solid;
   border-width: 1px;
   transition: all 0.2s;
@@ -36,4 +33,12 @@ const StyledInput = styled.input`
   }
 `;
 
-export { StyledInput };
+const StyledLabel = styled.label`
+  display: flex;
+  flex-direction: column;
+  font-size: 16px;
+  margin: 15px 0;
+  gap: 15px;
+`;
+
+export { StyledInput, StyledLabel };

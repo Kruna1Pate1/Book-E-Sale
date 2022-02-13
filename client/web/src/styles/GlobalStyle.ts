@@ -23,8 +23,8 @@ const GlobalStyle = styled.createGlobalStyle`
   textarea,
   button {
     font-family: inherit;
-  } 
-  
+  }
+
   img {
     max-width: 100%;
   }
@@ -32,6 +32,15 @@ const GlobalStyle = styled.createGlobalStyle`
   a {
     text-decoration: none;
     color: inherit;
+  }
+
+  hr {
+    width: 100%;
+    margin: 20px 0;
+    padding-right: 10px;
+    border: none;
+    border-top: 1px solid;
+    border-top-color: ${({ theme }) => theme.colors.border};
   }
 `;
 

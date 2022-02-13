@@ -50,7 +50,7 @@ const Button = ({
 
 Button.defaultProps = {
   type: 'primary-filled',
-  width: '115px',
+  width: '100px',
   height: '40px'
 };
 

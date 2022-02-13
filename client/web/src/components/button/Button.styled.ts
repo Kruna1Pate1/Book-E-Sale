@@ -20,7 +20,7 @@ const StyledButton = styled.button<IProps>`
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 0 10px;
+
   padding-right: 10px;
   font-size: 16px;
   max-width: calc(var(--width) + 13px);

@@ -16,8 +16,15 @@ const StyledSearchBar = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  gap: 13px;
   padding: 0 50px;
   margin: 0 auto;
+
+  input {
+    max-width: 430px;
+    flex-grow: 2;
+    flex-shrink: 2;
+  }
 
   @media (max-width: 760px) {
     padding: 0 20px;

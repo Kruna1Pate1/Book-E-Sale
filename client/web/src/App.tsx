@@ -1,8 +1,9 @@
 import React from 'react';
 import { ThemeProvider } from 'styled-components';
 import { myTheme } from './styles/theme';
-import { Container, Header } from './components';
+import { Container, Footer, Header } from './components';
 import GlobalStyle from './styles/GlobalStyle';
+import AppRoutes from './App.routes';
 
 function App() {
   return (
@@ -10,8 +11,11 @@ function App() {
       <GlobalStyle />
       <Header />
       <Container>
-        <h2>Hello World</h2>
+        <main>
+          <AppRoutes />
+        </main>
       </Container>
+      <Footer />
     </ThemeProvider>
   );
 }

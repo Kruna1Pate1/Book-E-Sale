@@ -1,3 +1,4 @@
+import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
 
 type IProps = {
@@ -26,4 +27,12 @@ const Nav = styled.nav<IProps>`
   }
 `;
 
-export default Nav;
+const StyledNavLink = styled(NavLink)<IProps>`
+  &:not(.icon).active {
+    color: ${({ theme }) => theme.colors.secondary};
+    padding-bottom: 2px;
+    border-bottom: 2px solid;
+  }
+`;
+
+export { Nav as default, StyledNavLink };
