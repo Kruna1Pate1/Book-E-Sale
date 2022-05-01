@@ -1,0 +1,26 @@
+spring:
+  # Database source configuration
+  datasource:
+    url: jdbc:postgresql://localhost:5432/bookesale
+    username: admin
+    password: admin@123
+  #    initialization-mode: always
+
+  # Hibernate config
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        dialect: org.hibernate.dialect.PostgreSQL94Dialect
+
+  # Console logging
+  output.ansi.enabled: ALWAYS
+
+# Application variables
+app:
+  jwt:
+    secret: Kruna1Pate1_Book-E-Sale_SecreteKey
+    expirationMs: 5259600000
