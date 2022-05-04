@@ -2,7 +2,7 @@ import React from 'react';
 import { FilledButton, OutlineButton } from './Button.styled';
 
 type Variant = {
-  type: `${'primary' | 'secondary'}-${'filled' | 'outlined'}`;
+  design: `${'primary' | 'secondary'}-${'filled' | 'outlined'}`;
 };
 
 export type ButtonProps = {
@@ -12,12 +12,12 @@ export type ButtonProps = {
 } & Variant;
 
 const Button = ({
-  type,
+  design,
   children,
   width,
   height
 }: ButtonProps): JSX.Element => {
-  switch (type) {
+  switch (design) {
     case 'primary-filled':
       return (
         <FilledButton isPrimary={true} width={width} height={height}>

@@ -4,17 +4,20 @@ import { myTheme } from './styles/theme';
 import { Container, Footer, Header } from './components';
 import GlobalStyle from './styles/GlobalStyle';
 import AppRoutes from './App.routes';
+import { AuthProvider } from './context/AuthContext';
 
 function App() {
   return (
     <ThemeProvider theme={myTheme}>
       <GlobalStyle />
-      <Header />
-      <Container>
-        <main>
-          <AppRoutes />
-        </main>
-      </Container>
+      <AuthProvider>
+        <Header />
+        <Container>
+          <main>
+            <AppRoutes />
+          </main>
+        </Container>
+      </AuthProvider>
       <Footer />
     </ThemeProvider>
   );

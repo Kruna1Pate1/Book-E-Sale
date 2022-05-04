@@ -1,6 +1,7 @@
 package com.kruna1pate1.bookesale.server.security;
 
 import com.kruna1pate1.bookesale.server.filter.JwtAuthenticationFilter;
+import com.kruna1pate1.bookesale.server.model.ERole;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
@@ -39,6 +40,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         http.authorizeRequests()
                 .antMatchers("/auth/**").permitAll()
+                .antMatchers("/user/").hasRole(ERole.ADMIN.name())
                 .anyRequest().authenticated();
         http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
     }

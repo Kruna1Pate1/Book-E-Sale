@@ -4,7 +4,6 @@ import com.kruna1pate1.bookesale.server.exception.EmailAlreadyUsedException;
 import com.kruna1pate1.bookesale.server.exception.EmailNotFoundException;
 import com.kruna1pate1.bookesale.server.model.ERole;
 import com.kruna1pate1.bookesale.server.model.User;
-import com.kruna1pate1.bookesale.server.repository.RoleRepository;
 import com.kruna1pate1.bookesale.server.repository.UserRepository;
 import com.kruna1pate1.bookesale.server.service.RoleService;
 import com.kruna1pate1.bookesale.server.service.UserService;
@@ -13,10 +12,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -70,10 +69,20 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User getByEmail(String email) {
+    public User getById(int id) throws EmailNotFoundException {
+        User user = userRepository.findById(id).orElseThrow(() -> {
+            log.error("User {} not found in database", id);
+            return new EmailNotFoundException("User Id not found");
+        });
+        log.info("User {} found in database", user);
+        return user;
+    }
+
+    @Override
+    public User getByEmail(String email) throws EmailNotFoundException {
         User user = userRepository.findByEmail(email).orElseThrow(() -> {
             log.error("Email {} not found in database", email);
-            return new EmailNotFoundException("Email not found");
+            throw new EmailNotFoundException("Email not found");
         });
         log.info("User with email {} found in database", email);
         return user;
@@ -94,10 +103,10 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User setRole(String email, ERole role) {
+    public User setRole(String email, ERole role) throws EmailNotFoundException {
         User user = userRepository.findByEmail(email).orElseThrow(() -> {
             log.error("Email {} not found in database", email);
-            return new EmailNotFoundException("Email not found");
+            throw new EmailNotFoundException("Email not found");
         });
 
         userRepository.setRole(email, roleService.getByName(role.name()));
@@ -106,13 +115,25 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User deleteByEmail(String email) {
-        User user = userRepository.deleteByEmail(email).orElseThrow(() -> {
-            log.error("Email {} not found in database", email);
-            return new EmailNotFoundException("Email not found");
-        });
-        log.info("User {} deleted from database", user);
+    public User update(User user) throws EmailNotFoundException {
+        if (!isEmailExist(user.getEmail())) {
+            log.error("User {} not found in database", user);
+            throw  new EmailNotFoundException("User Id not found");
+        }
+        user = userRepository.save(user);
+        log.info("User {} updated", user.getEmail());
         return user;
+    }
+
+    @Override
+    @Transactional
+    public void deleteByEmail(String email) throws EmailNotFoundException{
+        if (!isEmailExist(email)) {
+            log.error("Email {} not found in database", email);
+            throw new EmailNotFoundException("Email not found");
+        }
+        userRepository.deleteByEmail(email);
+        log.info("User {} deleted from database", email);
     }
 
     @Override

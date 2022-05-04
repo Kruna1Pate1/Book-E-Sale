@@ -1,13 +1,15 @@
 package com.kruna1pate1.bookesale.server.payload.request;
 
+import com.kruna1pate1.bookesale.server.model.User;
+
 /**
  * Created by KRUNAL on 18-03-2022
  */
 public record RegisterRequest(
-        String firstName,
-        String lastName,
+        User.Name name,
         String email,
         String password,
-        String role
+        String confirmPassword,
+        int role
 ) {
 }

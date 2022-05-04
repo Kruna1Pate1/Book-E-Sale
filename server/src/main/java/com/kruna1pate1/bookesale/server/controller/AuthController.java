@@ -17,11 +17,13 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.constraints.NotBlank;
 import java.net.URI;
 
 /**
@@ -40,17 +42,17 @@ public class AuthController {
     @PostMapping("register")
     public ResponseEntity<RegisterResponse> register(@RequestBody RegisterRequest request) throws EmailAlreadyUsedException {
 
-        User.Name name = new User.Name(request.firstName(), request.lastName());
+        User.Name name = request.name();
         String email = request.email();
         String password = request.password();
-        Role role = roleService.getByName(request.role());
+        Role role = roleService.getById(request.role());
         User user = new User(null, name, email, password, role);
         User user1 = userService.save(user);
         return ResponseEntity.created(URI.create("/user/" + user1.getUserId())).build();
     }
 
     @PostMapping("/login")
-    public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest request) {
+    public ResponseEntity<LoginResponse> login(@NotBlank @RequestBody LoginRequest request) {
         try {
             authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(
@@ -65,10 +67,9 @@ public class AuthController {
             final User user = userService.getByEmail(request.email());
             final LoginResponse response = new LoginResponse(
                     user.getUserId(),
-                    user.getName().getFirstName(),
-                    user.getName().getLastName(),
+                    user.getName(),
                     user.getEmail(),
-                    user.getRole().getName().name(),
+                    user.getRole().getRoleId(),
                     jwtToken
             );
             return ResponseEntity.ok(response);

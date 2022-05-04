@@ -1,5 +1,6 @@
 package com.kruna1pate1.bookesale.server.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 
@@ -21,7 +22,7 @@ public class Role {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "role_id", updatable = false, nullable = false)
-    private int roleId;
+    private Integer roleId;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "name", nullable = false, unique = true, length = 50)
@@ -30,5 +31,6 @@ public class Role {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "role")
     @ToString.Exclude
     @JsonIgnoreProperties(value = {"role"})
+    @JsonIgnore
     private List<User> users;
 }

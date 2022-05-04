@@ -14,11 +14,11 @@ public interface RoleService {
 
     Role getById(int id);
 
-    Role deleteById(int id);
+    void deleteById(int id);
 
     Role getByName(String name);
 
-    Role deleteByName(String name);
+    void deleteByName(String name);
 
     void deleteAll();
 }

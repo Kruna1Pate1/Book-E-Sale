@@ -6,11 +6,11 @@ type InputProps = {
   hint?: string;
 } & React.HTMLProps<HTMLInputElement>;
 
-const Input = ({ id, label, hint, type }: InputProps): JSX.Element => {
+const Input = ({ id, label, hint, type, onChange }: InputProps): JSX.Element => {
   return (
     <>
       <StyledLabel htmlFor={id}>{label}</StyledLabel>
-      <StyledInput placeholder={hint} id={id} type={type}></StyledInput>
+      <StyledInput onChange={onChange} placeholder={hint} id={id} type={type}></StyledInput>
     </>
   );
 };

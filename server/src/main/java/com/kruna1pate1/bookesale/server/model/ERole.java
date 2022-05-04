@@ -6,5 +6,9 @@ package com.kruna1pate1.bookesale.server.model;
 public enum ERole {
     ADMIN,
     SELLER,
-    BUYER
+    BUYER;
+
+    public static ERole valueOfIgnoreCase(String name) {
+        return valueOf(name.toUpperCase());
+    }
 }

@@ -17,6 +17,11 @@ const Icon = styled.div<IProps>`
     color: var(--color);
     fill: 'currentColor';
   }
+
+  span.label {
+    color: ${({ theme }) => theme.colors.hint};
+    text-align: center;
+  }
 `;
 
 export default Icon;

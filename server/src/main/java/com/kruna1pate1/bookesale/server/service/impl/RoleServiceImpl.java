@@ -44,19 +44,14 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
-    public Role deleteById(int id) {
-        Role role = roleRepository.findById(id).orElseThrow(() -> {
-            log.error("Role {} not found in database", id);
-            return new RoleNotFoundException("Role not found");
-        });
+    public void deleteById(int id) {
         roleRepository.deleteById(id);
-        log.info("Role {} deleted from database", role);
-        return role;
+        log.info("Role {} deleted from database", id);
     }
 
     @Override
     public Role getByName(String name) {
-        Role role = roleRepository.findByName(ERole.valueOf(name)).orElseThrow(() -> {
+        Role role = roleRepository.findByName(ERole.valueOfIgnoreCase(name)).orElseThrow(() -> {
             log.error("Role {} not found in database", name);
             return new RoleNotFoundException("Role not found");
         });
@@ -65,13 +60,9 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
-    public Role deleteByName(String name) {
-        Role role = roleRepository.findByName(ERole.valueOf(name)).orElseThrow(() -> {
-            log.error("Role {} not found in database", name);
-            return new RoleNotFoundException("Role not found");
-        });
-        log.info("Role {} deleted from database", role);
-        return role;
+    public void deleteByName(String name) {
+        roleRepository.deleteByName(ERole.valueOfIgnoreCase(name));
+        log.info("Role {} deleted from database", name);
     }
 
     @Override

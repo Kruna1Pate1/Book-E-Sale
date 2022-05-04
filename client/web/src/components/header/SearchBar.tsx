@@ -7,13 +7,13 @@ const SearchBar = (): JSX.Element => {
   return (
     <StyledSearchBar>
       <Input hint="What are you looking for..." />
-      <Button type="secondary-filled">
+      <Button design="secondary-filled">
         <Icon>
           <BsSearch />
         </Icon>
         Search
       </Button>
-      <Button type="primary-filled">Cancel</Button>
+      <Button design="primary-filled">Cancel</Button>
     </StyledSearchBar>
   );
 };
