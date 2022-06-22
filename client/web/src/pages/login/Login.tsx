@@ -3,7 +3,7 @@ import { Heading, Input, Button, Spacer } from '../../components';
 import { LoginContainer, LeftContainer, RightContainer } from './Login.styled';
 import { LoginModel } from '../../model/AuthModel';
 import { useAuthContext } from '../../context/AuthContext';
-import authService from '../../service/auth.service';
+import { AuthService } from '../../service';
 import { Formik, Form, Field } from 'formik';
 import { useNavigate } from 'react-router-dom';
 
@@ -13,7 +13,7 @@ const Login = (): JSX.Element => {
   const navigate = useNavigate();
 
   const onSubmit = (values: LoginModel): void => {
-    authService.login(values).then((res) => {
+    AuthService.login(values).then((res) => {
       authContext.setUser(res);
       console.log(res);
       navigate('/profile');

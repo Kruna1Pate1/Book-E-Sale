@@ -1,5 +1,6 @@
 package com.kruna1pate1.bookesale.server.payload.response;
 
+import com.kruna1pate1.bookesale.server.model.Role;
 import com.kruna1pate1.bookesale.server.model.User;
 
 /**
@@ -9,7 +10,7 @@ public record LoginResponse(
         int userId,
         User.Name name,
         String email,
-        int role,
+        Role role,
         String jwtToken
 ) {
 }

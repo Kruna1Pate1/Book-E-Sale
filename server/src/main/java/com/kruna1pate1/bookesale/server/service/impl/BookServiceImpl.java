@@ -56,6 +56,11 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
+    public List<Book> getStartsWith(String name) {
+        return bookRepository.findTop6ByNameContainsIgnoreCase(name);
+    }
+
+    @Override
     public List<Book> getByCategory(ECategory category) {
         Category category1 = categoryService.getByName(category.name());
         return bookRepository.findAllByCategory(category1);

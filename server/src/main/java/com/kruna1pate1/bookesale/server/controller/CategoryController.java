@@ -1,7 +1,7 @@
 package com.kruna1pate1.bookesale.server.controller;
 
-import com.kruna1pate1.bookesale.server.model.Role;
-import com.kruna1pate1.bookesale.server.service.RoleService;
+import com.kruna1pate1.bookesale.server.model.Category;
+import com.kruna1pate1.bookesale.server.service.CategoryService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -13,24 +13,25 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 /**
- * Created by KRUNAL on 02-05-2022
+ * Created by KRUNAL on 05-05-2022
  */
 @Slf4j
 @RestController
-@RequestMapping("/role")
+@RequestMapping("/category")
 @RequiredArgsConstructor
-public class RoleController {
+public class CategoryController {
 
-    private final RoleService roleService;
+    private final CategoryService categoryService;
 
     @GetMapping()
-    public ResponseEntity<List<Role>> getAll() {
-        return ResponseEntity.ok(roleService.getAll());
+    public ResponseEntity<List<Category>> getAll() {
+        return ResponseEntity.ok(categoryService.getAll());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Role> getById(@PathVariable int id) {
-        return ResponseEntity.ok(roleService.getById(id));
+    public ResponseEntity<Category> getById(@PathVariable int id) {
+        return ResponseEntity.ok(categoryService.getById(id));
     }
 
 }
+

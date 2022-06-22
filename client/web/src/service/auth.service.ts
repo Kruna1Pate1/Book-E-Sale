@@ -1,6 +1,6 @@
 import { RegisterModel, LoginModel } from '../model/AuthModel';
 import { UserModel } from '../model/UserModel';
-import request from './request';
+import { request } from '.';
 
 class AuthService {
   ENDPOINT = '/auth';

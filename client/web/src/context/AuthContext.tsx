@@ -2,19 +2,20 @@ import { createContext, useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { UserModel } from '../model/UserModel';
 import Constants from '../utils/Constants';
+import { request } from '../service';
 
 export interface AuthContextModel {
   setUser: (user: UserModel) => void;
   user: UserModel;
   signOut: () => void;
-  appInitialize: boolean;
+  // appInitialize: boolean;
 }
 
 const initialState: AuthContextModel = {
   setUser: () => {},
   user: new UserModel(),
-  signOut: () => {},
-  appInitialize: false
+  signOut: () => {}
+  // appInitialize: false
 };
 
 export const AuthContext = createContext<AuthContextModel>(initialState);
@@ -22,7 +23,7 @@ export const AuthContext = createContext<AuthContextModel>(initialState);
 export const AuthProvider: React.FC<React.PropsWithChildren<{}>> = ({
   children
 }: React.PropsWithChildren<{}>) => {
-  const [appInitialize, setAppInitialize] = useState<boolean>(false);
+  // const [appInitialize, setAppInitialize] = useState<boolean>(false);
   const [user, _setUser] = useState<UserModel>(new UserModel());
 
   const navigate = useNavigate();
@@ -44,7 +45,11 @@ export const AuthProvider: React.FC<React.PropsWithChildren<{}>> = ({
       navigate('/login');
     }
     _setUser(itemStr);
-  }, []);
+    request.defaults.headers.common = {
+      Authorization: `Bearer ${user.jwtToken}`
+    };
+    // console.log(request.defaults.headers);
+  }, [user.jwtToken]);
 
   const signOut = (): void => {
     setUser(new UserModel());
@@ -55,8 +60,8 @@ export const AuthProvider: React.FC<React.PropsWithChildren<{}>> = ({
   let value: AuthContextModel = {
     user,
     setUser,
-    signOut,
-    appInitialize
+    signOut
+    // appInitialize
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

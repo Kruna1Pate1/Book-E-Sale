@@ -28,7 +28,7 @@ public class UserController {
     private final RoleService roleService;
     private final JwtUtil jwtUtil;
 
-    @GetMapping("")
+    @GetMapping()
     public ResponseEntity<List<User>> getAll() {
         return ResponseEntity.ok(userService.getAll());
     }

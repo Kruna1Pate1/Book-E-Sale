@@ -19,6 +19,8 @@ public interface BookService {
 
     Book getByName(String name);
 
+    List<Book> getStartsWith(String name);
+
     List<Book> getByCategory(ECategory category);
 
     void deleteAll();

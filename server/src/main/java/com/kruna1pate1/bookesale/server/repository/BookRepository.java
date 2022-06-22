@@ -14,6 +14,8 @@ public interface BookRepository extends JpaRepository<Book, Integer> {
 
     Optional<Book> findByName(String name);
 
+    List<Book> findTop6ByNameContainsIgnoreCase(String name);
+
     List<Book> findAllByCategory(Category category);
 
     void deleteByName(String name);

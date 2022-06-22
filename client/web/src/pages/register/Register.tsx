@@ -3,29 +3,29 @@ import { Button, Heading, Input, Spacer } from '../../components';
 import { RegisterContainer, RowContainer } from './Register.styled';
 import { RegisterModel } from '../../model/AuthModel';
 import { useAuthContext } from '../../context/AuthContext';
-import authService from '../../service/auth.service';
+import { AuthService } from '../../service';
 import { Formik, Form, Field } from 'formik';
 import { useNavigate } from 'react-router-dom';
 
 const Register = (): JSX.Element => {
   const authContext = useAuthContext();
   const initialValues: RegisterModel = new RegisterModel();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const onSubmit = (values: RegisterModel): void => {
-    authService.register(values).then((res) => {
+    AuthService.register(values).then((res) => {
       // authContext.setUser(res);
       console.log(res);
-      navigate('/login')
+      navigate('/login');
     });
     console.log(values);
   };
 
-    useEffect(() => {
-      if (authContext.user.userId !== undefined) {
-        navigate('/profile');
-      }
-    }, [authContext.user]);
+  useEffect(() => {
+    if (authContext.user.userId !== undefined) {
+      navigate('/profile');
+    }
+  }, [authContext.user]);
 
   return (
     <>

@@ -1,10 +1,10 @@
-import { Role } from '../utils/Enum';
+import RoleModel from './RoleModel';
 
 export class UserModel {
-  userId?: number;
+  userId!: number;
   name!: Name;
   email!: string;
-  role!: Role;
+  role!: RoleModel;
   jwtToken!: string;
 }
 

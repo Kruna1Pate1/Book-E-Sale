@@ -2,6 +2,8 @@ package com.kruna1pate1.bookesale.server.security;
 
 import com.kruna1pate1.bookesale.server.filter.JwtAuthenticationFilter;
 import com.kruna1pate1.bookesale.server.model.ERole;
+import com.kruna1pate1.bookesale.server.service.UserService;
+import com.kruna1pate1.bookesale.server.util.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
@@ -21,7 +23,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
  */
 @Slf4j
 @Configuration
-@EnableWebSecurity
+@EnableWebSecurity(debug = true)
 @RequiredArgsConstructor
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
@@ -36,11 +38,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.csrf().disable();
+        http.csrf().disable().cors();
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         http.authorizeRequests()
                 .antMatchers("/auth/**").permitAll()
-                .antMatchers("/user/").hasRole(ERole.ADMIN.name())
+                .mvcMatchers("/user").hasAuthority(ERole.ADMIN.name())
                 .anyRequest().authenticated();
         http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
     }

@@ -73,6 +73,8 @@ public class JwtUtil {
 
     public void validateJwtToken(String token) throws JwtException {
         try {
+            log.error("wtf");
+            log.error(token);
             Jwts.parserBuilder().setSigningKey(secretKey).build().parseClaimsJws(token);
 
         } catch (SignatureException e) {
