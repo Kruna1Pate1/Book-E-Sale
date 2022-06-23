@@ -8,6 +8,7 @@ const Header = (): JSX.Element => {
     <StyledHeader>
       <SiteHeader />
       <SearchBar />
+      {/* <Suggetions /> */}
     </StyledHeader>
   );
 };

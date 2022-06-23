@@ -4,6 +4,7 @@ import com.kruna1pate1.bookesale.server.exception.BookNotFoundException;
 import com.kruna1pate1.bookesale.server.model.Book;
 import com.kruna1pate1.bookesale.server.model.ECategory;
 import com.kruna1pate1.bookesale.server.payload.request.AddBookRequest;
+import com.kruna1pate1.bookesale.server.payload.response.SearchBooksResponse;
 import com.kruna1pate1.bookesale.server.service.BookService;
 import com.kruna1pate1.bookesale.server.service.CategoryService;
 import lombok.RequiredArgsConstructor;
@@ -36,8 +37,12 @@ public class BookController {
     }
 
     @GetMapping("/search")
-    public ResponseEntity<List<Book>> getByName(@RequestParam(name = "q") String name) {
-        return ResponseEntity.ok(bookService.getStartsWith(name));
+    public ResponseEntity<SearchBooksResponse> getByName(@RequestParam(name = "q") String name) {
+
+        List<Book> bookList = bookService.getStartsWith(name);
+        SearchBooksResponse response = new SearchBooksResponse(bookList.size(), bookList);
+
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("/category/{category}")

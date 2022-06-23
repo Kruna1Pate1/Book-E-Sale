@@ -26,6 +26,11 @@ const StyledSearchBar = styled.div`
     flex-shrink: 2;
   }
 
+  & button {
+    padding-right: 10px;
+    margin-left: 10px;
+  }
+
   @media (max-width: 760px) {
     padding: 0 20px;
   }

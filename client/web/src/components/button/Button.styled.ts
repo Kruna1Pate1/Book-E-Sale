@@ -21,7 +21,7 @@ const StyledButton = styled.button<IProps>`
   align-items: center;
   justify-content: center;
 
-  padding-right: 10px;
+  /* padding-right: 10px; */
   font-size: 16px;
   max-width: calc(var(--width) + 13px);
   min-width: calc(var(--width) - 15px);
@@ -47,8 +47,8 @@ const OutlineButton = styled(StyledButton)`
   background-color: transparent;
   transition: 0.3s;
   border: 1px solid;
-  height: 30px;
-  min-width: 80px;
+  /* height: 30px; */
+  /* min-width: 80px; */
 
   &:hover {
     color: var(--text-color);

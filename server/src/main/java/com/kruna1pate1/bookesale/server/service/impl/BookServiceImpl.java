@@ -57,7 +57,7 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public List<Book> getStartsWith(String name) {
-        return bookRepository.findTop6ByNameContainsIgnoreCase(name);
+        return bookRepository.findTop10ByNameContainsIgnoreCase(name);
     }
 
     @Override
