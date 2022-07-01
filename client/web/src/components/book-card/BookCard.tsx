@@ -5,9 +5,10 @@ import { StyledBookCard } from './BookCard.styled';
 
 type BookProps = {
   book: BookModel;
+  addToCart: () => void;
 };
 
-const BookCard = ({ book }: BookProps): JSX.Element => {
+const BookCard = ({ book, addToCart }: BookProps): JSX.Element => {
   return (
     <>
       <StyledBookCard>
@@ -21,7 +22,7 @@ const BookCard = ({ book }: BookProps): JSX.Element => {
             MRP &#8377; <span>{book.price}</span>
           </p>
         </div>
-        <Button design="primary-filled" width="100%">
+        <Button design="primary-filled" width="100%" onClick={addToCart}>
           Add To Cart
         </Button>
       </StyledBookCard>

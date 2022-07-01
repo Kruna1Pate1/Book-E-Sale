@@ -13,47 +13,70 @@ import { BookService } from '../../service';
 import { BookModel } from '../../model/BookModel';
 import { useSearchParams } from 'react-router-dom';
 import BaseList from '../../model/BaseList';
+import cartService from '../../service/cart.service';
+import { useAuthContext } from '../../context/AuthContext';
+import { toast } from 'react-toastify';
+import { AddCartModel } from '../../model/CartModel';
 
-const Book = (): JSX.Element => {
+const BookList = (): JSX.Element => {
   const [bookList, setBookList] = useState<BaseList<BookModel[]>>({
     records: [],
     totalRecords: 0
   });
 
+  const authContext = useAuthContext();
+  const userId = authContext.user.userId;
+
   const [searchParams, setSearchParams] = useSearchParams();
-  const name = searchParams.get('q') ?? 'a';
-  const [filter, setFilter] = useState('a-z');
+  const [sortBy, setSortBy] = useState<string>();
+  const [filter, setFilter] = useState<string>();
 
   useEffect(() => {
-    loadBooks();
-  }, [searchParams]);
+    let name = filter || searchParams.get('q') || 'a';
+    loadBooks(name);
+  }, [searchParams, filter]);
 
-  const loadBooks = () => {
+  const loadBooks = (name: string) => {
     BookService.getByName(name).then((res) => {
       setBookList(res);
     });
     console.log(bookList);
   };
 
-  useEffect(() => {
-    let temp = bookList;
-    switch (filter) {
-      case 'a-z':
-        temp.records = bookList.records.sort((a, b) =>
-          a.name.localeCompare(b.name)
-        );
-        break;
+  const sortBooks = (sort: string) => {
+    setSortBy(sort);
+    bookList.records.sort((a, b) => {
+      let s1 = a.name.toLowerCase();
+      let s2 = b.name.toLowerCase();
+      if (s1 < s2) {
+        return sort === 'a-z' ? -1 : 1;
+      }
+      if (s1 > s2) {
+        return sort === 'a-z' ? 1 : -1;
+      }
+      return 0;
+    });
 
-      case 'z-a':
-        temp.records = bookList.records.sort((a, b) =>
-          b.name.localeCompare(a.name)
-        );
-        break;
-    }
-
-    setBookList(temp);
     console.log(bookList);
-  }, [bookList, filter]);
+  };
+
+  const addToCart = (bookId: number) => {
+    if (userId === undefined) {
+      toast.error('Login to add items in cart!');
+      return;
+    }
+    let cart = new AddCartModel(userId, bookId, 1);
+    cartService
+      .add(cart)
+      .then((res) => {
+        console.log(res);
+        toast.success('Item added to the cart!');
+      })
+      .catch((reason) => {
+        console.log(reason);
+        toast.error('Something went wrong!!');
+      });
+  };
 
   return (
     <>
@@ -64,12 +87,18 @@ const Book = (): JSX.Element => {
           <h3>
             Total - <span>{bookList.totalRecords}</span> items
           </h3>
-          <Input id="find" hint="Find your book..." />
-
-          <StyledDropDown
+          <Input
+            id="find"
+            hint="Find your book..."
             value={filter}
             onChange={(e) => setFilter(e.currentTarget.value)}
+          />
+
+          <StyledDropDown
+            value={sortBy}
+            onChange={(e) => sortBooks(e.currentTarget.value)}
           >
+            <option selected={true}>Select filter</option>
             <option value="a-z">a - z</option>
             <option value="z-a">z - a</option>
           </StyledDropDown>
@@ -78,7 +107,11 @@ const Book = (): JSX.Element => {
         <BookListContainer>
           {bookList.records &&
             bookList.records.map((book: BookModel) => (
-              <BookCard book={book} key={book.bookId} />
+              <BookCard
+                book={book}
+                key={book.bookId}
+                addToCart={() => addToCart(book.bookId)}
+              />
             ))}
         </BookListContainer>
 
@@ -114,4 +147,4 @@ const Book = (): JSX.Element => {
   );
 };
 
-export default Book;
+export default BookList;

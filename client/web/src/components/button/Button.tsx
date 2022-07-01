@@ -8,6 +8,8 @@ type Variant = {
 export type ButtonProps = {
   width: string;
   height: string;
+  radius?: string;
+  className?: string;
   children?: React.ReactNode;
 } & Variant & React.HTMLProps<HTMLButtonElement>;
 
@@ -16,33 +18,35 @@ const Button = ({
   children,
   width,
   height,
+  radius,
+  className,
   onClick
 }: ButtonProps): JSX.Element => {
   switch (design) {
     case 'primary-filled':
       return (
-        <FilledButton isPrimary={true} width={width} height={height} onClick={onClick}>
+        <FilledButton isPrimary={true} width={width} height={height} onClick={onClick} radius={radius} className={className}>
           {children}
         </FilledButton>
       );
 
     case 'secondary-filled':
       return (
-        <FilledButton isPrimary={false} width={width} height={height} onClick={onClick}>
+        <FilledButton isPrimary={false} width={width} height={height} onClick={onClick} radius={radius} className={className}>
           {children}
         </FilledButton>
       );
 
     case 'primary-outlined':
       return (
-        <OutlineButton isPrimary={true} width={width} height={height} onClick={onClick}>
+        <OutlineButton isPrimary={true} width={width} height={height} onClick={onClick} radius={radius} className={className}>
           {children}
         </OutlineButton>
       );
 
     case 'secondary-outlined':
       return (
-        <OutlineButton isPrimary={false} width={width} height={height} onClick={onClick}>
+        <OutlineButton isPrimary={false} width={width} height={height} onClick={onClick} radius={radius} className={className}>
           {children}
         </OutlineButton>
       );

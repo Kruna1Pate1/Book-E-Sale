@@ -8,6 +8,6 @@ import com.kruna1pate1.bookesale.server.model.User;
 public record UpdateUserRequest(
         User.Name name,
         String password,
-        String role
+        int role
 ) {
 }

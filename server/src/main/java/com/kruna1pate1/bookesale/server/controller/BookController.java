@@ -1,6 +1,7 @@
 package com.kruna1pate1.bookesale.server.controller;
 
 import com.kruna1pate1.bookesale.server.exception.BookNotFoundException;
+import com.kruna1pate1.bookesale.server.model.BaseList;
 import com.kruna1pate1.bookesale.server.model.Book;
 import com.kruna1pate1.bookesale.server.model.ECategory;
 import com.kruna1pate1.bookesale.server.payload.request.AddBookRequest;
@@ -27,8 +28,9 @@ public class BookController {
     private final CategoryService categoryService;
 
     @GetMapping()
-    public ResponseEntity<List<Book>> getAll() {
-        return ResponseEntity.ok(bookService.getAll());
+    public ResponseEntity<BaseList<Book>> getAll() {
+        List<Book> bookList = bookService.getAll();
+        return ResponseEntity.ok(new BaseList<>(bookList, bookList.size()));
     }
 
     @GetMapping("/{id}")
@@ -46,8 +48,9 @@ public class BookController {
     }
 
     @GetMapping("/category/{category}")
-    public ResponseEntity<List<Book>> getByCategory(@PathVariable String category) {
-        return ResponseEntity.ok(bookService.getByCategory(ECategory.valueOfIgnoreCase(category)));
+    public ResponseEntity<BaseList<Book>> getByCategory(@PathVariable String category) {
+        List<Book> bookList = bookService.getByCategory(ECategory.valueOfIgnoreCase(category));
+        return ResponseEntity.ok(new BaseList<>(bookList, bookList.size()));
     }
 
     @PostMapping()

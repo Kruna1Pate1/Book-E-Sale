@@ -12,14 +12,12 @@ const SiteHeader = (): JSX.Element => {
     <StyledSiteHeader>
       <Logo src={svg} alt="logo" />
       <Nav>
-        {/* {console.log(typeof authContext.user != 'undefined')}
-        {console.log(authContext)} */}
         {typeof authContext.user.name != 'undefined' ? (
           <>
             <StyledNavLink to="/profile">
               <Icon size="28px">
                 <BsPersonCircle />
-              {/* <span className="label">{authContext.user.name.firstName}</span> */}
+                {/* <span className="label">{authContext.user.name.firstName}</span> */}
               </Icon>
             </StyledNavLink>
             <span className="separator">|</span>

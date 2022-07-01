@@ -24,6 +24,13 @@ const LoginContainer = styled.div`
     color: ${({ theme }) => theme.colors.hint};
     font-weight: lighter;
   }
+
+  p.error {
+    margin-top: 6px;
+    color: ${({ theme }) => theme.colors.error};
+    font-weight: 300;
+    font-style: italic;
+  }
 `;
 
 const LeftContainer = styled.div`

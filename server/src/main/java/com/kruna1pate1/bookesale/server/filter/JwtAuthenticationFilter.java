@@ -20,6 +20,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.HashSet;
+import java.util.Set;
 
 @Component
 @RequiredArgsConstructor
@@ -54,6 +56,12 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
-        return new AntPathRequestMatcher("/auth/**").matches(request);
+
+        Set<String> skipUrls = new HashSet<>(Set.of("/auth/**", "/book/**"));
+
+        return skipUrls.stream().anyMatch(p -> new AntPathRequestMatcher(p).matches(request));
+//        return (new AntPathRequestMatcher("/auth/**").matches(request)
+//                ||
+//                new AntPathRequestMatcher("/booklist").matches(request));
     }
 }

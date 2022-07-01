@@ -1,6 +1,7 @@
 package com.kruna1pate1.bookesale.server.controller;
 
 import com.kruna1pate1.bookesale.server.exception.UnauthorizedException;
+import com.kruna1pate1.bookesale.server.model.ERole;
 import com.kruna1pate1.bookesale.server.model.Role;
 import com.kruna1pate1.bookesale.server.model.User;
 import com.kruna1pate1.bookesale.server.payload.request.UpdateUserRequest;
@@ -11,6 +12,7 @@ import com.kruna1pate1.bookesale.server.util.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -64,7 +66,7 @@ public class UserController {
 
             User.Name name = request.name();
             String password = request.password();
-            Role role = roleService.getByName(request.role());
+            Role role = roleService.getById(request.role());
 
             if (name != null) user.setName(name);
             if (password != null) user.setPassword(password);
@@ -108,5 +110,13 @@ public class UserController {
         } else {
             throw new UnauthorizedException("You are not authorized to access this page");
         }
+
+    }
+
+    @PreAuthorize("hasAuthority(ADMIN)")
+    @DeleteMapping()
+    public ResponseEntity deleteAll() {
+        userService.deleteAll();
+        return ResponseEntity.ok().build();
     }
 }

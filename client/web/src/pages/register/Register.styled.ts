@@ -18,11 +18,19 @@ const RegisterContainer = styled.div`
 
   input {
     flex: 1;
+    /* width: 40%; */
   }
 
   *.hint {
     color: ${({ theme }) => theme.colors.hint};
     font-weight: lighter;
+  }
+
+  p.error {
+    margin-top: 6px;
+    color: ${({ theme }) => theme.colors.error};
+    font-weight: 300;
+    font-style: italic;
   }
 `;
 
@@ -32,6 +40,12 @@ const RowContainer = styled.div`
   align-items: stretch;
   gap: 30px;
   input {
+    flex: 1;
+    margin-top: 5px;
+    width: 60%;
+  }
+
+  div.field {
     flex: 1;
     margin-top: 20px;
   }

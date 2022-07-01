@@ -4,6 +4,7 @@ type IProps = {
   isPrimary: boolean;
   width: string;
   height: string;
+  radius?: string;
 };
 
 const StyledButton = styled.button<IProps>`
@@ -14,15 +15,29 @@ const StyledButton = styled.button<IProps>`
 
   color: var(--text-color);
   background-color: var(--theme-color);
-  border-radius: ${({ theme }) => theme.borderRadius};
+  border-radius: ${({ radius, theme }) => radius ?? theme.borderRadius};
   height: ${({ height }) => height};
 
   display: flex;
   align-items: center;
   justify-content: center;
 
-  /* padding-right: 10px; */
   font-size: 16px;
+
+  ${({ className }) =>
+    className === 'quantity' &&
+    `
+      font-size: 22px;
+      font-weight: 300;
+    `}
+
+  ${({ className }) =>
+    className === 'remove' &&
+    `
+      font-size: 15px;
+      font-weight: 400;
+    `}
+
   max-width: calc(var(--width) + 13px);
   min-width: calc(var(--width) - 15px);
   transition: all 0.4s;

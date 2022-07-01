@@ -11,6 +11,7 @@ declare module 'styled-components' {
       onSurface: string;
       title: string;
       hint: string;
+      error: string;
       border: string;
       btnText: string;
     };

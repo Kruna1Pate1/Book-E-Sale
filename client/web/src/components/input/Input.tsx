@@ -1,18 +1,25 @@
+import { type } from '@testing-library/user-event/dist/types/setup/directApi';
 import React from 'react';
 import { StyledInput, StyledLabel } from './Input.style';
 
 type InputProps = {
   label?: string;
   hint?: string;
-} & React.HTMLProps<HTMLInputElement>;
+  radius?: string;
+  isError?: boolean;
+} & React.ComponentPropsWithoutRef<'input'>;
 
-const Input = ({ id, label, hint, type, onChange }: InputProps): JSX.Element => {
+const Input = ({hint, label, ...props}: InputProps): JSX.Element => {
   return (
     <>
-      <StyledLabel htmlFor={id}>{label}</StyledLabel>
-      <StyledInput onChange={onChange} placeholder={hint} id={id} type={type}></StyledInput>
+      {label && <StyledLabel htmlFor={props.id}>{label}</StyledLabel>}
+      <StyledInput
+      placeholder={hint}
+        {...props}
+      ></StyledInput>
     </>
   );
 };
 
 export default Input;
+export type { InputProps };
