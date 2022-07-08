@@ -61,7 +61,7 @@ public class BookController {
                 request.price(),
                 request.description(),
                 request.base64image(),
-                categoryService.getById(request.categoryId())
+                categoryService.getById(request.category())
         );
 
         return ResponseEntity.ok(bookService.save(book));

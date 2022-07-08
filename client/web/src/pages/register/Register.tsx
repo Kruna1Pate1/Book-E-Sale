@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button, Heading, Input, Spacer } from '../../components';
 import { RegisterContainer, RowContainer } from './Register.styled';
 import { RegisterModel } from '../../model/AuthModel';
@@ -8,11 +8,20 @@ import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { useNavigate } from 'react-router-dom';
 import * as yup from 'yup';
 import { toast } from 'react-toastify';
+import { Role } from '../../utils/Enum';
+import { StyledLabel } from '../../components/input/Input.style';
+import { MySelect } from '../../components/select';
 
 const Register = (): JSX.Element => {
   const authContext = useAuthContext();
   const initialValues: RegisterModel = new RegisterModel();
   const navigate = useNavigate();
+
+  const roles = [
+    { label: 'Admin', value: Role.Admin },
+    { label: 'Seller', value: Role.Seller },
+    { label: 'Buyer', value: Role.Buyer }
+  ];
 
   const validationSchema = yup.object().shape({
     name: yup.object().shape({
@@ -32,6 +41,8 @@ const Register = (): JSX.Element => {
       .required('Email is required')
       .email('Please enter valid email'),
 
+    role: yup.string().required('Role is required'),
+
     password: yup
       .string()
       .required('Password is required')
@@ -40,10 +51,7 @@ const Register = (): JSX.Element => {
         /^(?=.*[a-z])(?=.*[A-Z])/,
         'Must Contain One Uppercase, One Lowercase'
       )
-      .matches(
-        /^(?=.*[!@#\$%\^&\*])/,
-        'Must Contain One Special Character'
-      )
+      .matches(/^(?=.*[!@#\$%\^&\*])/, 'Must Contain One Special Character')
       .matches(/^(?=.{6,20}$)\D*\d/, 'Must Contain One Number'),
 
     confirmPassword: yup
@@ -53,6 +61,7 @@ const Register = (): JSX.Element => {
   });
 
   const onSubmit = (values: RegisterModel): void => {
+    console.log(values);
     AuthService.register(values)
       .then((res) => {
         console.log(res);
@@ -60,7 +69,7 @@ const Register = (): JSX.Element => {
         navigate('/login');
       })
       .catch((reason) => {
-        toast.error('Can\'t Register!');
+        toast.error("Can't Register!");
       });
     console.log(values);
   };
@@ -80,7 +89,7 @@ const Register = (): JSX.Element => {
           validationSchema={validationSchema}
           onSubmit={onSubmit}
         >
-          {({ errors, touched }) => (
+          {({ setFieldValue, errors, touched }) => (
             <Form>
               <h3>Personal Information</h3>
               <hr />
@@ -108,7 +117,7 @@ const Register = (): JSX.Element => {
                     name="name.lastName"
                     id="name.lastName"
                     label="Last Name *"
-                    hint="last name"
+                    hint="Last name"
                     isError={touched.name?.lastName && errors.name?.lastName}
                     as={Input}
                   />
@@ -135,7 +144,18 @@ const Register = (): JSX.Element => {
                   </p>
                 </div>
 
-                <div className="field"></div>
+                <div className="field">
+                  <MySelect
+                    name="role"
+                    id="role"
+                    label="Role *"
+                    className="role"
+                    options={roles}
+                    onChange={(e: any) => {
+                      setFieldValue('role', e?.value);
+                    }}
+                  />
+                </div>
               </RowContainer>
 
               <Spacer height="70px" />

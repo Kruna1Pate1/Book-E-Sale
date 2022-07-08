@@ -1,4 +1,5 @@
-import styled from 'styled-components';
+import Select from 'react-select';
+import styled, { useTheme } from 'styled-components';
 
 const BookContainer = styled.div`
   display: flex;
@@ -23,10 +24,6 @@ const BookBarContainer = styled.div`
   justify-content: space-between;
 
   gap: 120px;
-
-  & select {
-    min-width: 150px;
-  }
 `;
 
 const BookListContainer = styled.div`

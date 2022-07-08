@@ -33,6 +33,7 @@ const StyledInput = styled.input<InputProps>`
   &::placeholder {
     color: ${({ theme }) => theme.colors.hint};
     font-style: italic;
+    white-space: nowrap;
   }
 
   &:focus {
@@ -55,6 +56,7 @@ const StyledLabel = styled.label`
   font-size: 16px;
   margin: 15px 0;
   gap: 15px;
+  white-space: nowrap;
 `;
 
 const StyledDropDown = styled.select`

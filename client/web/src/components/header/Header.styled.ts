@@ -7,6 +7,11 @@ const StyledSiteHeader = styled(Container)`
   display: flex;
   justify-content: space-between;
   align-items: center;
+
+  & span {
+    margin: 10px;
+  }
+  white-space: nowrap;
 `;
 
 const StyledSearchBar = styled.div`

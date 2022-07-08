@@ -1,5 +1,5 @@
 import BaseList from '../model/BaseList';
-import { BookModel } from '../model/BookModel';
+import { AddBookModel, BookModel } from '../model/BookModel';
 import { request } from '.';
 
 class UserService {
@@ -31,7 +31,7 @@ class UserService {
       });
   }
 
-  public async add(data: BookModel): Promise<BookModel> {
+  public async add(data: AddBookModel): Promise<BookModel> {
     const url = `${this.ENDPOINT}`;
 
     return request.post<BookModel>(url, data).then((res) => {

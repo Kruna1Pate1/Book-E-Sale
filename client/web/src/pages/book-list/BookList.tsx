@@ -17,6 +17,8 @@ import cartService from '../../service/cart.service';
 import { useAuthContext } from '../../context/AuthContext';
 import { toast } from 'react-toastify';
 import { AddCartModel } from '../../model/CartModel';
+import Select from 'react-select';
+import { MySelect } from '../../components/select';
 
 const BookList = (): JSX.Element => {
   const [bookList, setBookList] = useState<BaseList<BookModel[]>>({
@@ -30,6 +32,11 @@ const BookList = (): JSX.Element => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [sortBy, setSortBy] = useState<string>();
   const [filter, setFilter] = useState<string>();
+
+  const sortOptions = [
+    { label: 'A - Z', value: 'a-z' },
+    { label: 'Z - A', value: 'z-a' }
+  ];
 
   useEffect(() => {
     let name = filter || searchParams.get('q') || 'a';
@@ -94,14 +101,13 @@ const BookList = (): JSX.Element => {
             onChange={(e) => setFilter(e.currentTarget.value)}
           />
 
-          <StyledDropDown
-            value={sortBy}
-            onChange={(e) => sortBooks(e.currentTarget.value)}
-          >
-            <option selected={true}>Select filter</option>
-            <option value="a-z">a - z</option>
-            <option value="z-a">z - a</option>
-          </StyledDropDown>
+          <MySelect
+            name="sort"
+            classNamePrefix="sort"
+            placeholder="Sort By"
+            options={sortOptions}
+            onChange={(e: any) => sortBooks(e.value || '')}
+          />
         </BookBarContainer>
 
         <BookListContainer>
@@ -122,7 +128,7 @@ const BookList = (): JSX.Element => {
                 1
               </Button>
             </li>
-            <li>
+            {/* <li>
               <Button design="primary-outlined" width="60px">
                 2
               </Button>
@@ -139,7 +145,7 @@ const BookList = (): JSX.Element => {
               <Button design="primary-outlined" width="60px">
                 10
               </Button>
-            </li>
+            </li> */}
           </ul>
         </BookPageStatusContainer>
       </BookContainer>

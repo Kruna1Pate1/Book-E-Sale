@@ -19,9 +19,12 @@ const StyledBookCard = styled.div`
     font-size: 16px;
     margin: 0;
     text-overflow: ellipsis;
-    overflow: hidden;
+    overflow: scroll;
     display: -webkit-box;
     white-space: nowrap;
+    ::-webkit-scrollbar {
+      display: none;
+    }
   }
 
   & img {
@@ -35,9 +38,12 @@ const StyledBookCard = styled.div`
 
   & *.desc {
     text-overflow: ellipsis;
-    overflow: hidden;
+    overflow: scroll;
     display: -webkit-box;
     -webkit-line-clamp: 2; /* number of lines to show */
+    ::-webkit-scrollbar {
+      display: none;
+    }
     line-clamp: 2;
     -webkit-box-orient: vertical;
   }

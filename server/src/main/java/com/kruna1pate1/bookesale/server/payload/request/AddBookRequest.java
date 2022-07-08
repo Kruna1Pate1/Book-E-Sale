@@ -10,6 +10,6 @@ public record AddBookRequest(
         long price,
         String description,
         String base64image,
-        int categoryId
+        int category
 ) {
 }

@@ -5,7 +5,7 @@ import { Heading } from '../../components';
 import { ItemCard } from '../../components/item-card';
 import { useAuthContext } from '../../context/AuthContext';
 import BaseList from '../../model/BaseList';
-import { UpdateCartModel } from '../../model/CartModel';
+import { CartModel, UpdateCartModel } from '../../model/CartModel';
 import cartService from '../../service/cart.service';
 import { CartContainer, ItemContainer, Title } from './Cart.styled';
 
@@ -18,6 +18,7 @@ const Cart = (): JSX.Element => {
   const authContext = useAuthContext();
   const userId = authContext.user.userId;
   const navigate = useNavigate();
+  const [totalPrice, setTotalPrice] = useState(0);
 
   useEffect(() => {
     if (userId === undefined) {
@@ -35,13 +36,17 @@ const Cart = (): JSX.Element => {
     console.log(cartList);
   };
 
-  const getTotalPrice = (): number => {
+  useEffect(() => {
+    updateTotalPrice();
+  }, [cartList]);
+  const updateTotalPrice = () => {
     let price = 0;
     cartList.records &&
       cartList.records.forEach((c) => {
-        price += ( c.book.price * c.quantity);
+        price += c.book.price * c.quantity;
       });
-    return price;
+    setTotalPrice(price);
+    console.log(totalPrice);
   };
 
   const removeItem = (cartId: number) => {
@@ -67,18 +72,16 @@ const Cart = (): JSX.Element => {
   };
 
   const updateQuantity = (cartId: number, quantity: number) => {
-    let cart = cartList.records
+    cartList.records
       .filter((c) => {
         return c.cartId === cartId;
       })
-      .map((c) => {
+      .forEach((c) => {
         c.quantity = quantity;
         return c;
       });
-    // let cartList1 = new BaseList<CartModel[]>();
 
-    // cartList1.records = cart;
-    // cartList1.totalRecords = cart.length;
+    updateTotalPrice();
 
     let cartModel = new UpdateCartModel(cartId, quantity);
 
@@ -104,7 +107,7 @@ const Cart = (): JSX.Element => {
             My Shopping Bag (<span>{cartList.totalRecords}</span> Items)
           </h3>
           <h3>
-            Total price: <span>{getTotalPrice()}</span>
+            Total price: <span>{totalPrice}</span>
           </h3>
         </Title>
 

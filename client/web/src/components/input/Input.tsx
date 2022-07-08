@@ -1,4 +1,3 @@
-import { type } from '@testing-library/user-event/dist/types/setup/directApi';
 import React from 'react';
 import { StyledInput, StyledLabel } from './Input.style';
 
