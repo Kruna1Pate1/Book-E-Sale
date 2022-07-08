@@ -9,6 +9,7 @@ E-Commerce platform for buying & selling of books.
 - ReactJS
 - React Router
 - Styled Component
+- Toastify
 - Formik and Yup
 
 #### Backend
